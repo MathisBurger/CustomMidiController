@@ -4,6 +4,7 @@
 Protocols prots = Protocols(176, 50);
 
 uint8_t channel[] = {A0};
+int controller[] = {21};
 int channelValues[(int)sizeof(channel)];
 
 void setup() {
@@ -20,6 +21,7 @@ void loop() {
       int value = analogRead(channel[i]);
       if (prots.tolleranceTriggered(channelValues[i], value)) {
         channelValues[i] = value;
+        prots.send_MIDI_cmd(controller[i], value);
       }
     }
     delay(1000);
