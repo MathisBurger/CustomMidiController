@@ -5,11 +5,12 @@ class Protocols
 {
     private:
         int CONTROL_CHANGE;
-        int CONTROLLER_NUMBER;
 
     public:
-        Protocols(int controlChange, int controllerNumber);
+        Protocols(int controlChange);
         int ConvertPotValue(int value);
+        void send_MIDI_cmd(int controller, int value);
+        
 };
 
 #endif
