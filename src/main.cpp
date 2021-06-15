@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include "./protocols/protocols.h"
+#include "protocols/protocols.h"
+#include "checker/checker.h"
 
 Protocols prots = Protocols(176, 50);
 
@@ -16,12 +17,8 @@ void setup() {
 
 void loop() {
 
-    for (int i=0; i<(int)sizeof(channel); i++) {
-      int value = analogRead(channel[i]);
-      if (prots.tolleranceTriggered(channelValues[i], value)) {
-        channelValues[i] = value;
-      }
-    }
+    checkFader(prots, channel, channelValues);
     delay(1000);
+    Serial.println(channelValues[0]);
 
 }
