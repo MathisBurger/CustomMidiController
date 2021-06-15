@@ -5,7 +5,9 @@
 Protocols prots = Protocols(176, 50);
 
 uint8_t channel[] = {A0};
+int channelNumbers[] = {21};
 int channelValues[(int)sizeof(channel)];
+
 
 void setup() {
   Serial.begin(9600);
@@ -17,7 +19,7 @@ void setup() {
 
 void loop() {
 
-    checkFader(prots, channel, channelValues);
+    checkFader(prots, channel, channelValues, channelNumbers);
     delay(1000);
     Serial.println(channelValues[0]);
 
