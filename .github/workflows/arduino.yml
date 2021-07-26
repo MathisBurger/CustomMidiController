@@ -1,11 +1,6 @@
 name: test
  
-on:
-  pull_request:
-    branches:
-      - master
-    types:
-      - closed
+on: [push, pull_request]
  
 jobs:
   test-matrix:
@@ -22,16 +17,24 @@ jobs:
     runs-on: windows-latest
  
     steps:
+    
       - name: Checkout
         uses: actions/checkout@master
 
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.0.0
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
       - name: Install platform
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: |
           arduino-cli core update-index
           arduino-cli core install ${{ matrix.arduino-platform }}
 
+
       - name: Compile Sketch
+        env:
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./midi-control
