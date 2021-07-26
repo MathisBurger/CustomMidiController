@@ -1,40 +1,13 @@
-name: test
- 
-on: [push, pull_request]
- 
+name: Build Arduino
+
+on: [push]
+
 jobs:
-  test-matrix:
- 
-  
-    strategy:
-      matrix:
-        arduino-platform: ["arduino:samd", "arduino:avr"]
-        include:
-          - arduino-platform: "arduino:samd"
-            fqbn: "arduino:samd:nano_33_iot"
-          - arduino-platform: "arduino:avr"
-            fqbn: "arduino:avr:uno"
-    runs-on: windows-latest
- 
+  build:
+    name: Test compiling examples for UNO
+    runs-on: ubuntu-latest
     steps:
-    
-      - name: Checkout
-        uses: actions/checkout@master
-
-      - name: Setup Arduino CLI
-        uses: arduino/setup-arduino-cli@v1.0.0
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-
-      - name: Install platform
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        run: |
-          arduino-cli core update-index
-          arduino-cli core install ${{ matrix.arduino-platform }}
-
-
-      - name: Compile Sketch
-        env:
-            ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./midi-control
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Compile all examples
+      uses: ArminJo/arduino-test-compile@v3
