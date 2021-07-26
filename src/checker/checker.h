@@ -4,6 +4,6 @@
 #include "protocols/protocols.h"
 #include <Arduino.h>
 
-void checkFader(Protocols prots, uint8_t channel[], int channelValues[], int channelNumbers[]);
+void checkFader(Protocols *prots, uint8_t *channel[], int *channelValues[], int *channelNumbers[]);
 
 #endif

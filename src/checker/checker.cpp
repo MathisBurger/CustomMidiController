@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "checker/checker.h"
 #include "protocols/protocols.h"
 
@@ -8,12 +9,9 @@
 // of the memeory stack behind the pointer address and changes it from 
 // the pointer. After that it sends the MIDI command to the 
 // client computer
-void checkFader(Protocols prots, uint8_t channel[], int *channelValues[], int channelNumbers[]) {
-    for (int i=0; i<(int)sizeof(channel); i++) {
-      int value = analogRead(channel[i]);
-      if (prots.tolleranceTriggered(*channelValues[i], value)) {
-        prots.send_MIDI_cmd(channelNumbers[i], prots.ConvertPotValue(value));
-        *channelValues[i] = value;
-      }
+void checkFader(Protocols *prots, uint8_t *channel[], int *channelValues[], int *channelNumbers[]) {
+    for (int i=0; i<sizeof(*channel); i++) {
+
     }
 }
+
